@@ -1,0 +1,27 @@
+.TH CLIENT 1 "29 November 2020"
+.SH NAME
+client \- connect to a TCP server
+
+.SH SYNOPSIS
+\fB./client\fP <\fIport\fP> <\fIip_address\fP> [< FILE]
+
+.SH DESCRIPTION
+\fBclient\fP opens a socket to connect to a \fBserver\fP specified by \fIport\fP 
+and \fIip_address\fP. Messages in the format "T<\fBint\fP>" are sent
+to the server to simulate a 'transaction'. Messages in the format
+"S<\fBint\fP>" are used by \fBclient\fP to simulate idle time. Messages
+are passed to the client through \fBstdout\fP. Once the client sends
+a message to the server, the client will block until it receives a reply.
+Client keeps a log file <\fImachinename\fP>.<\fIprocessID\fP> in the 'logs'
+directory.
+
+.SH "SEE ALSO"
+server(1)
+
+.SH BUGS
+A connnected \fBclient\fP must reach the EOF of its input file or send a
+"quit" message (if inputting from the terminal) to close its connection with
+the server. If the client fails to do so after terminating, the socket on 
+the server's end will remain in memory.
+
+client does not check message format.

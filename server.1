@@ -1,0 +1,29 @@
+.TH SERVER 1 "29 November 2020"
+.SH NAME
+server \- run a multi-socket TCP server
+
+.SH SYNOPSIS
+\fB./server\fP <\fIport\fP>
+
+.SH DESCRIPTION
+\fBserver\fP creates a socket on \fIport\fP and uses
+\fBselect\fP to listen for multiple requests. Upon receipt of a
+message in the format "T<\fBint\fP>" the server simulates 
+a 'transaction' by consuming CPU time based on \fBint\fP.  
+If no message is received within 30 seconds, the server exits.
+Users can connect and send transactions using \fBclient\fP.
+
+.SH NOTES
+\fBserver\fP is not multi-threaded. It interleaves transaction requests
+from multiple clients but services each request one after the other.
+
+.SH "SEE ALSO"
+client(1), select(2)
+
+.SH BUGS
+A connnected \fBclient\fP must reach the EOF of its input file or send a
+"quit" message (if inputting from the terminal) to close its connection with
+the server. If the client fails to do so after terminating, the socket on 
+the server's end will remain in memory.
+
+server does not check message format.
